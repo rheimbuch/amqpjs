@@ -1,0 +1,22 @@
+AMQP-JS
+-----------
+
+AMQP-JS is a thin javascript wrapper around the rabbitmq java client. It's a first pass, so 
+expect bugs. Currently it is only supports exchange/queue creation and publishing. It's also
+only been tested against RabbitMQ; no idea if works against other AMQP servers.
+
+Requirements
+------------
+
+- Rhino Javascript runtime
+- RabbitMQ instance
+
+Example
+-----------
+
+	AMQP = require('AMQP.js');
+	var amqp = new AMQP({hostname:'localhost'});
+	var topicExch = amqp.topic({name:'myExchange'});
+	var queue = amqp.queue('myQueue');
+	queue.bind({exchange:'myExchange', key:'nested.key'});
+	topicExch.publish({key:'nested.key', body:'Hello from Rhino!'});
